@@ -1,11 +1,162 @@
-
 <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Page Title</title>
-      </head>
-      <body>
-        <h1>My First Heading</h1>
-        <p>My first paragraph.</p>
-      </body>
-    </html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">	
+	<title>FAQ Page</title>
+</head>
+<style>
+	img {
+		opacity: 0.5;
+		filter: alpha(opacity=50);
+		position: absolute;
+		left: 0px;
+		top: 0px;
+	}
+	h1{text-align: center;}
+	h4{text-align: center;}
+</style>
+<body>
+	<div class="container">
+		<img src="https://www.tsv-meerbusch.de/wp-content/uploads/Winter-Ski-Mountain-Snow.jpg"   alt="Mountains" width=100% height=100%>
+		<span>
+			<h1><br>Frequently Asked Questions</h1><br><br>
+			<!--Accordion wrapper-->
+			<div class>
+				<div class="accordion md-accordion" id="accordion" role="tablist" aria-multiselectable="true">
+
+					<!-- Accordion card -->
+					<div class="card">
+
+						<!-- Card header -->
+						<div class="card-header" role="tab" id="question_1">
+							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_1"
+							aria-expanded="false" aria-controls="collapse_1">
+							<h4 class="mb-0">
+								Is riding with Ski Lift safe? <i class="fas fa-angle-down rotate-icon"></i>
+							</h4>
+						</a>
+					</div>
+
+					<!-- Card body -->
+					<div id="collapse_1" class="collapse" role="tabpanel" aria-labelledby="question_1"
+					data-parent="#accordion">
+					<div class="card-body">
+						<p class = "text-center">Absolutely. Ski Lift screens all drivers, accepting only those who are at least<br>
+						18 years of age and have a valid license and vehicle insurance.</p>
+					</div>
+				</div>
+
+			</div>
+			<!-- Accordion card -->
+
+			<!-- Accordion card -->
+			<div class="card">
+
+				<!-- Card header -->
+				<div class="card-header" role="tab" id="question_2">
+					<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_2"
+					aria-expanded="false" aria-controls="collapse_2">
+					<h4 class="mb-0">
+						Selecting a vehicle option for your ride <i class="fas fa-angle-down rotate-icon"></i>
+					</h4>
+				</a>
+			</div>
+
+			<!-- Card body -->
+			<div id="collapse_2" class="collapse" role="tabpanel" aria-labelledby="question_2"
+			data-parent="#accordion">
+			<div class="card-body">
+				<p class = "text-center">You can see all vehicle options available in your area before confirming your ride.<br> 
+					Several vehicle options are offered to get you to the slopes safely and comfortably.<br><br>
+					NOTE: Once a ride request is made, the vehicle choice cannot be changed without cancelling<br> 
+				and requesting the ride again.</p>
+			</div>
+		</div>
+
+	</div>
+	<!-- Accordion card -->
+
+	<!-- Accordion card -->
+	<div class="card">
+
+		<!-- Card header -->
+		<div class="card-header" role="tab" id="question_3">
+			<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_3"
+			aria-expanded="false" aria-controls="collapse_3">
+			<h4 class="mb-0">
+				Requesting more than one vehicle <i class="fas fa-angle-down rotate-icon"></i>
+			</h4>
+		</a>
+	</div>
+
+	<!-- Card body -->
+	<div id="collapse_3" class="collapse" role="tabpanel" aria-labelledby="question_3"
+	data-parent="#accordion">
+	<div class="card-body">
+		<p class = "text-center">Using your Ski Lift account, one vehicle may be requested at a time. If you are travelling<br>
+			with a group too large for one vehicle, please ask others in your group to use their Ski Lift<br> 
+		accounts to request additional vehicles.</p>
+	</div>
+</div>
+
+</div>
+<!-- Accordion card -->
+
+<!-- Accordion card -->
+<div class="card">
+
+	<!-- Card header -->
+	<div class="card-header" role="tab" id="question_4">
+		<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_4"
+		aria-expanded="false" aria-controls="collapse_4">
+		<h4 class="mb-0">
+			Riding With Pets <i class="fas fa-angle-down rotate-icon"></i>
+		</h4>
+	</a>
+</div>
+
+<!-- Card body -->
+<div id="collapse_4" class="collapse" role="tabpanel" aria-labelledby="question_4"
+data-parent="#accordion">
+<div class="card-body">
+	<p class = "text-center">Please let your Ski Lift driver know if you will be travelling with any pets.</p>
+</div>
+</div>
+
+</div>
+<!-- Accordion card -->
+
+<!-- Accordion card -->
+<div class="card">
+
+	<!-- Card header -->
+	<div class="card-header" role="tab" id="question_5">
+		<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_5"
+		aria-expanded="false" aria-controls="collapse_5">
+		<h4 class="mb-0">
+			Lost/Forgotten Items <i class="fas fa-angle-down rotate-icon"></i>
+		</h4>
+	</a>
+</div>
+
+<!-- Card body -->
+<div id="collapse_5" class="collapse" role="tabpanel" aria-labelledby="question_5"
+data-parent="#accordion">
+<div class="card-body">
+	<p class = "text-center">Ski Lift allows you to communicate with your driver even after your trip has been completed.<br>
+	If an item needs to be retrieved, please contact your driver.</p>
+</div>
+</div>
+
+</div>
+<!-- Accordion card -->
+</span>
+</div>
+<!-- Accordion wrapper -->
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
