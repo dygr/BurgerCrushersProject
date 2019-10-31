@@ -2,10 +2,146 @@
 <!DOCTYPE html>
     <html>
       <head>
-        <title>Page Title</title>
+        <title>Settings</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
       </head>
-      <body>
-        <h1>My First Heading</h1>
-        <p>My first paragraph.</p>
+      <body style="background-color:#e6ffff;">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <h1 style="color:#002266;">Settings</h1>
+              <p style="color:#002266;">
+                Use this page to adjust your settings and offer or request
+                rides to and from people near you!
+              </p>
+              <br/>
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm">
+                    <h3 style="color:#002266;">General Settings</h3>
+                    <br/>
+                    <form>
+                      <div class="form-group">
+                        <label for="fullName"><h5 style="color:#002266;">Full Name:</h5></label>
+                        <input type="text" class="form-control" id="fullName" aria-describedby="nameHelp" placeholder="Name">
+                      </div>
+                      <div class="form-group">
+                        <label for="ageInput" style="color:#002266;"><h5>Age:</h5></label>
+                        <input type="number" class="form-control" id="ageInput" aria-describedby="ageHelp" placeholder="Age">
+                      </div>
+                      <div class="form-group">
+                        <label for="cityInput" style="color:#002266;"><h5>City of Residence:</h5></label>
+                        <input type="text" class="form-control" id="cityInput" aria-describedby="cityHelp" placeholder="City Name">
+                      </div>
+                      <div class="form-group"> <!--Remove Later if GPS unecessary, match by city instead-->
+                        <label for="addressInput" style="color:#002266;"><h5>First Line of Address:</h5></label>
+                        <input type="text" class="form-control" id="addressInput" aria-describedby="addressHelp" placeholder="Address">
+                        <p>
+                          (No apartment # needed) <br/>
+                        </p>
+                      </div>
+                      <button type="button" class="btn btn-info">Save Changes</button>
+                      <br/>
+                    </form>
+                  </div>
+                  <div class="col-sm">
+                    <h3 style="color:#002266;">Add a Ride Request</h3>
+                    <br/>
+                    <form>
+                      <div class="form-group">
+                        <label for="dateRange"><h5 style="color:#002266;">Preferred Date/Date Range:</h5></label>
+                        <input type="text" class="form-control" id="dateRange" aria-describedby="dateRangeHelp" placeholder="Date(s)">
+                        <p>
+                          E.g. 12/25/2019 or 12/25/2019-12/27/2019 <br/>
+                        </p>
+                      </div>
+                      <div class="form-group">
+                        <label for="payInput"><h5 style="color:#002266;">Offered Pay (per rider):</h5></label>
+                        <input type="number" class="form-control" id="payInput" aria-describedby="payHelp" placeholder="Amount (USD)">
+                        <p>
+                          Payment will be handled in person via venmo, cash or
+                          other preferred option.
+                        </p>
+                      </div>
+                      <div class="form-group">
+                        <label for="bonusRiders"><h5 style="color:#002266;">Extra Riders (if any):</h5></label>
+                        <input type="number" class="form-control" id="bonusRiders" aria-describedby="bonusHelp" placeholder="Amount">
+                      </div>
+                      <div class="form-group">
+                        <label for="preferredResort"><h5 style="color:#002266;">Preferred Resorts:</h5></label>
+                        <input type="text" class="form-control" id="preferredResort" aria-describedby="prefresortHelp" placeholder="Name">
+                        <p>
+                          E.g. Aspen <br/>
+                        </p>
+                      </div>
+                      <div class="form-group">
+                        <label for="riderRideDescription"><h4 style="color:#002266;">Ride Details</h4>
+                          <p>
+                            Describe your preferred meeting address, neighborhood or city, as well as any other
+                            details you want to share with potential drivers! This could include schedule/location flexibility,
+                            preferred resorts, preferred payment method, etc.
+                          </p>
+                        </label>
+                        <textarea class="form-control" id="riderRideDescription" rows="20"></textarea>
+                      </div>
+                    <button type="button" class="btn btn-info">Submit Ride Request</button>
+                    <br/>
+                    </form>
+                  </div>
+                  <div class="col-sm">
+                    <h3 style="color:#002266;">Add a Ride Offer</h3>
+                    <br/>
+                    <form>
+                      <div class="form-group">
+                        <label for="dateTime"><h5 style="color:#002266;">Date and Leave/Return Time:</h5></label>
+                        <input type="text" class="form-control" id="dateTime" aria-describedby="dateTimeHelp" placeholder="Date, times">
+                        <p>
+                          E.g. 12/25/2019 8:00-5:00 <br/>
+                          Times are only approximations.
+                        </p>
+                      </div>
+                      <div class="form-group">
+                        <label for="pay2Input"><h5 style="color:#002266;">Requested Pay (per rider):</h5></label>
+                        <input type="number" class="form-control" id="pay2Input" aria-describedby="pay2Help" placeholder="Amount (USD)">
+                        <p>
+                          Payment will be handled in person via venmo, cash or
+                          other preferred option.
+                        </p>
+                      </div>
+                      <div class="form-group">
+                        <label for="slotsInput"><h5 style="color:#002266;">Slots Available:</h5></label>
+                        <input type="number" class="form-control" id="slotsInput" aria-describedby="slotsHelp" placeholder="Amount">
+                      </div>
+                      <div class="form-group">
+                        <label for="resortInput"><h5 style="color:#002266;">Resort Destination Name:</h5></label>
+                        <input type="text" class="form-control" id="resortInput" aria-describedby="resortHelp" placeholder="Name">
+                        <p>
+                          E.g. Aspen <br/>
+                        </p>
+                      </div>
+                      <div class="form-group">
+                        <label for="DriverRideDescription"><h4 style="color:#002266;">Ride details</h4>
+                          <p>
+                            Describe your preferred meeting address, neighborhood or city, as well as any other
+                            details you want to share with potential riders! This could include schedule/location flexibility,
+                            vehicle type, preferred payment method, music tastes, etc.
+                          </p>
+                        </label>
+                        <textarea class="form-control" id="driverRideDescription" rows="20"></textarea>
+                      </div>
+                    <button type="button" class="btn btn-info">Submit Ride Offer</button>
+                    <br/><br/>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </body>
     </html>
