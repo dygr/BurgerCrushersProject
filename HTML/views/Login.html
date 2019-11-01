@@ -1,11 +1,28 @@
-
 <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Page Title</title>
-      </head>
-      <body>
-        <h1>My First Heading</h1>
-        <p>My first paragraph.</p>
-      </body>
-    </html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <title> Login Page </title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <link href="./resources/css/signin.css" rel="stylesheet">
+    </head>
+    <body class="center text-center">
+        <form class="form-signin">
+            <h1> Sign In </h1>
+            <label> Email Address </label>
+            <input class="form-control" id="inputEmail"/>
+            <label> Password </label>
+            <input class="form-control" id="inputPassword" type="password"/>
+            <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me | 
+            </label>
+                <a href="">Forgot Password?</a>
+            </div>
+            <button class="btn btn-lg btn-primary" type="submit"> Sign in </button>
+            <a class="btn btn-lg btn-primary" href="signup.html"> Sign Up </a>
+        </form>
+    </body>
+</html>
