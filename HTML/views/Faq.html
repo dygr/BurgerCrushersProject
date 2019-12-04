@@ -5,21 +5,83 @@
 	<title>FAQ Page</title>
 </head>
 <style>
-	img {
-		opacity: 0.5;
-		filter: alpha(opacity=50);
-		position: absolute;
-		left: 0px;
-		top: 0px;
+	body, html {
+		height: 100%;
+		margin: 0;
+	}
+
+	.bg {
+		background-image: url("../resources/img/adventure-alpine-alps-414459.jpg");
+		height: 50%;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+
+	.caption {
+		left: 0;
+		top: 25%;
+		width: 100%;
+		text-align: center;
+		color: #000;
+		margin-top: 60px;
+		margin-bottom: 100px;
+	}
+
+	.caption span.border {
+		background-color: #111;
+		color: #fff;
+		padding: 18px;
+		font-size: 25px;
+		font-style: normal;
+		letter-spacing: 10px;
 	}
 	h1{text-align: center;}
 	h4{text-align: center;}
+
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		background-color: #333;
+		width: 100%;
+	}
+
+	li {
+		float: left;
+	}
+
+	li a {
+		display: block;
+		color: white;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+	}
+
+	li a:hover {
+		background-color: #111;
+	}
+	.active {
+		background-color: #3236A8;
+	}
+
 </style>
 <body>
-	<div class="container">
-		<img src="https://www.tsv-meerbusch.de/wp-content/uploads/Winter-Ski-Mountain-Snow.jpg"   alt="Mountains" width=100% height=100%>
+	<div>
 		<span>
-			<h1><br>Frequently Asked Questions</h1><br><br>
+			<div class="caption">
+				<span class="border">FAQ</span>
+			</div>
+			<ul>
+				<li><a href= "home.html" >Home</a></li>
+				<li><a href="signup.html">Signup</a></li>
+				<li><a href="login.html">Login</a></li>
+				<li><a href="FAQ.html">FAQ</a></li>
+				<li style="float:right"><a class="active" href="profile.html">Profile</a></li>
+				<li style="float:right"><a href="settings.html">Settings</a></li>
+			</ul>
 			<!--Accordion wrapper-->
 			<div class>
 				<div class="accordion md-accordion" id="accordion" role="tablist" aria-multiselectable="true">
@@ -31,7 +93,7 @@
 						<div class="card-header" role="tab" id="question_1">
 							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_1"
 							aria-expanded="false" aria-controls="collapse_1">
-							<h4 class="mb-0">
+							<h4 class="mb-0" style = "color: #3236A8">
 								Is riding with Ski Lift safe? <i class="fas fa-angle-down rotate-icon"></i>
 							</h4>
 						</a>
@@ -56,7 +118,7 @@
 				<div class="card-header" role="tab" id="question_2">
 					<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_2"
 					aria-expanded="false" aria-controls="collapse_2">
-					<h4 class="mb-0">
+					<h4 class="mb-0" style = "color: #3236A8">
 						Selecting a vehicle option for your ride <i class="fas fa-angle-down rotate-icon"></i>
 					</h4>
 				</a>
@@ -83,7 +145,7 @@
 		<div class="card-header" role="tab" id="question_3">
 			<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_3"
 			aria-expanded="false" aria-controls="collapse_3">
-			<h4 class="mb-0">
+			<h4 class="mb-0" style = "color: #3236A8">
 				Requesting more than one vehicle <i class="fas fa-angle-down rotate-icon"></i>
 			</h4>
 		</a>
@@ -109,7 +171,7 @@
 	<div class="card-header" role="tab" id="question_4">
 		<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_4"
 		aria-expanded="false" aria-controls="collapse_4">
-		<h4 class="mb-0">
+		<h4 class="mb-0" style = "color: #3236A8">
 			Riding With Pets <i class="fas fa-angle-down rotate-icon"></i>
 		</h4>
 	</a>
@@ -133,7 +195,7 @@ data-parent="#accordion">
 	<div class="card-header" role="tab" id="question_5">
 		<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_5"
 		aria-expanded="false" aria-controls="collapse_5">
-		<h4 class="mb-0">
+		<h4 class="mb-0" style = "color: #3236A8">
 			Lost/Forgotten Items <i class="fas fa-angle-down rotate-icon"></i>
 		</h4>
 	</a>
