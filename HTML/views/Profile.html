@@ -10,88 +10,168 @@
 
 
 </script>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <title>Profile Page</title>
-  </head>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
-    <ul class="navbar-nav mr-auto">
-     <li class="nav-item">
-      <a class="nav-link" href="home.html"> Home Page</a>
-      </li>
-      <li class="nav-item">
-      <a class="nav-link" href="ridersettings.html"> Settings <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-      <a class="nav-link" href="ridersettings.html"> Profile Page </a>
-      </li>
-    </ul>
-    <div class="form-inline my-2 my-lg-0">
-      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Logout</button>
-    </div>
-    </div>
-  </nav>
-  <div class="container">
-    <br>
-    <div class="row">
-      <div class="col-4">
-        <div class="card border-light mb-3" style="max-width: 40rem;">
-        <div class="card" style="background-color:LightGray;" >
-          <br>
-          <div class="text-center"> <img class="rounded-lg" class="card-img-top" src="profilepic.jpg" alt="Profile Pic" width="300" height="300">
-          <div class="card-body mx-auto">
-          </div>
-       </div>
-       </div>
-     </div>
+<html>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.bg {
+  background-image: url("https://raw.githubusercontent.com/dygr/BurgerCrushersProject/master/HTML/resources/img/adventure-alpine-alps-414459.jpg");
+  height: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.caption {
+  position: absolute;
+  left: 0;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  color: #000;
+}
+
+.caption span.border {
+  background-color: #111;
+  color: #fff;
+  padding: 18px;
+  font-size: 25px;
+  font-style: normal;
+  letter-spacing: 10px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+.active {
+  background-color: #3236A8;
+}
+
+.description {
+  color: white;
+  font-size: 20px;
+  font-style: normal;
+  text-align: center;
+  font-weight: bolder;
+  font-family: Noto Sans, sans-serif;
+  background-color: #152257;
+  padding: 20px 20px;
+}
+
+.heading {
+  color: white;
+  font-size: 25px;
+  text-align:left;
+  padding-left: 25px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  width: 25%;
+  background-color: #333;
+}
+
+.custom-select {
+  width: 50%
+}
+
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="caption">
+  <span class="border">SKI LIFT</span>
 </div>
-      <div class="col-8">
+
+<ul>
+  <li><a href="Home.html">Home</a></li>
+  <li><a href="Signup.html">Signup</a></li>
+  <li><a href="Login.html">Login</a></li>
+  <li><a href="Faq.html">FAQ</a></li>
+  <li><a href="Hemp.html">Help</a></li>
+  <li style="float:right"><a class="active" href="Profile.html">Profile</a></li>
+  <li style="float:right"><a href="Settings.html">Settings</a></li>
+</ul>
+  <div class="container">
+   <br>
+   <div class="row">
+     <div class="col-4">
+       <div class="card border-light mb-3" style="max-width: 40rem;">
+       <div class="card" style="background-color:LightGray;" >
+         <br>
+         <div class="text-center"> <img class="rounded-lg" class="card-img-top" src="profilepic.jpg" alt="Profile Pic" width="300" height="300">
+         <div class="card-body mx-auto">
+         </div>
+      </div>
+      </div>
+    </div>
+</div>
+			<div class="col-8">
         <div class="card border-light mb-3" style="background-color:LightGray;">
         <br>
-          <table class="table table-borderless" class="align-bottom">
+					<table class="table table-borderless" class="align-bottom">
+						<tr>
+							<th> Name </th>
+							<td>Jon Dosef</td>
+						</tr>
             <tr>
-              <th> Name </th>
-              <td>Jon Dosef</td>
-            </tr>
-            <tr>
-              <th> Driver rating</th>
-              <td> 4.2 ◆ </td>
-            </tr>
-            <tr>
-              <th> Car(make/model)</th>
-              <td> Nissan/Versa</td>
-            </tr>
-            <tr>
-              <th class="font-weight-bold">Car color</th>
-              <td>White</td>
-            </tr>
+							<th> Driver rating</th>
+							<td> 4.2 ◆ </td>
+						</tr>
+						<tr>
+							<th> Car(make/model)</th>
+							<td> Nissan/Versa</td>
+						</tr>
+						<tr>
+							<th class="font-weight-bold">Car color</th>
+							<td>White</td>
+						</tr>
             <tr>
               <td class="font-weight-bold">Ride</td>
               <td>Snowboard</td>
             </tr>
-            <tr>
-              <td class="font-weight-bold">Rider Level</td>
+						<tr>
+							<td class="font-weight-bold">Rider Level</td>
               <td>Dbl Black Diamond</td>
-            </tr>
-            <tr>
-              <td class="font-weight-bold">Favorite Mountain</td>
+						</tr>
+						<tr>
+							<td class="font-weight-bold">Favorite Mountain</td>
               <td>Ajax Mountain, Aspen</td>
-            </tr>
+						</tr>
             <br>
 
 
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
   <div class="card-deck">
@@ -129,7 +209,7 @@
   <div class="card" style="max-width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">◆◆</h5>
-      <p class="card-text">Not going to lie, the only reason I am giving this guy a bad review is becuase he totally showed me up on the moountain. Dude was ripping around and kept throwing snow at me. Other than that totally safe ride. </p>
+      <p class="card-text">Not going to lie, the only reason I am giving this guy a bad review is becuase he totally showed me up on the mountain. Dude was ripping around and kept throwing snow at me. Other than that totally safe ride. </p>
     </div>
     <div class="card-footer">
       <small class="text-muted">Last updated 2 months ago</small>
@@ -152,9 +232,9 @@
 <br>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-  <script src="../resources/js/my_scripts.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+	<script src="../resources/js/my_scripts.js"></script>
   </div>
-  </body>
+	</body>
 </html>
