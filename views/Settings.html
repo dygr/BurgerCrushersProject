@@ -36,6 +36,29 @@
         </style>
       </head>
       <body style="background-color:#e6ffff;">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script>
+        function submitRide(){
+          $.ajax({
+              url: "http://localhost:3000/data",  // the local Node server
+              method: 'GET',
+              success: function(data){
+                  console.log("test1"); //display data in cosole to see if I receive it
+              }
+          })
+        }
+        function submitInfo(){
+          $.ajax({
+              url: "http://localhost:3000/data",  // the local Node server
+              method: 'GET',
+              success: function(data){
+                  console.log("test2"); //display data in cosole to see if I receive it
+              }
+          })
+        }
+        </script>
         <ul>
           <li><a href= "Home.html">Home</a></li>
           <li><a href="Signup.html">Signup</a></li>
@@ -78,7 +101,7 @@
                           (No apartment # needed) <br/>
                         </p>
                       </div>
-                      <button type="button" class="btn btn-info">Save Changes</button>
+                      <button type="button" class="btn btn-info" onclick="submitInfo();">Save Changes</button>
                       <br/>
                     </form>
                   </div>
@@ -130,7 +153,7 @@
                         </label>
                         <textarea class="form-control" id="driverRideDescription" rows="20"></textarea>
                       </div>
-                    <button type="button" class="btn btn-info">Submit Ride Offer</button>
+                    <button type="button" class="btn btn-info" onclick="submitRide();">Submit Ride Offer</button>
                     <br/><br/>
                     </form>
                   </div>
