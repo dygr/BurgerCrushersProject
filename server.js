@@ -158,6 +158,7 @@ app.get('/home/search_weather', function(req, res) {
 
 });
 
+<<<<<<< HEAD
 app.get('/setting', (req, res) => {
   console.log(req);
   /* db.any('SELECT * FROM weather LIMIT 1;')
@@ -167,6 +168,10 @@ app.get('/setting', (req, res) => {
   .catch( err => {
     console.log(err);
   }) */
+=======
+app.get('/settings', (req, res) => {
+    console.log(req);
+>>>>>>> 518b417be1b142267a166a816d4d74b0b90ce370
 });
 
 app.listen(3000);

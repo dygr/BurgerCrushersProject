@@ -41,12 +41,20 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script>
         function submitRide(){
+<<<<<<< HEAD
 
+=======
+          console.log($("#dateTime").val());
+          console.log($("#pay2Input").val());
+          console.log($("#slotsInput").val());
+          console.log($("#resort1").val());
+          console.log($("#driverRideDescription").val());
+>>>>>>> 518b417be1b142267a166a816d4d74b0b90ce370
           $.ajax({
+              method: 'POST',
               url: "http://localhost:3000/data",  // the local Node server
-              method: 'GET',
               success: function(data){
-                  console.log("test1"); //display data in cosole to see if I receive it
+                
               }
           })
           .then(data => {
@@ -56,7 +64,7 @@
         function submitInfo(){
           $.ajax({
               url: "http://localhost:3000/data",  // the local Node server
-              method: 'GET',
+              method: 'PUT',
               success: function(data){
                   console.log("test2"); //display data in cosole to see if I receive it
               }
