@@ -41,12 +41,16 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script>
         function submitRide(){
+
           $.ajax({
               url: "http://localhost:3000/data",  // the local Node server
               method: 'GET',
               success: function(data){
                   console.log("test1"); //display data in cosole to see if I receive it
               }
+          })
+          .then(data => {
+            
           })
         }
         function submitInfo(){

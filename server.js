@@ -70,23 +70,23 @@ function retrieveNpost(url, resort, id){
         let snowpack = data['Snow Depth (in)'];
         let snowfall = data['Change In Snow Depth (in)'];
         let temp = data['Observed Air Temperature (degrees farenheit)'];
-        let query1 = "CREATE TABLE IF NOT EXISTS weather( id INT PRIMARY KEY, mountain VARCHAR(30) , temperature INT,wind INT, snowpack INT, snowfall INT, conditions VARCHAR(30));";
-        let query2 = `INSERT INTO weather (id, mountain, temperature, snowpack, snowfall) VALUES (${id}, ${resort}, ${temp}, ${snowpack}, ${snowfall}) ON CONFLICT (id) DO UPDATE SET temperature = ${temp}, snowpack = ${snowpack}, snowfall = ${snowfall};`;
-        db.task( 'insert data', task => {
-          return task.batch([
-              task.any(query1),
-              task.any(query2)
-          ]);
-        }).then( data => {
-          return true;
-        })
-          .catch( error => {
-            console.log(error)
-          })
       })
       .catch( (err) => {
         console.log(err)
       })
+      let query1 = "CREATE TABLE IF NOT EXISTS weather( id INT PRIMARY KEY, mountain VARCHAR(30) , temperature INT,wind INT, snowpack INT, snowfall INT, conditions VARCHAR(30));";
+      let query2 = `INSERT INTO weather (id, mountain, temperature, snowpack, snowfall) VALUES (${id}, ${resort}, ${temp}, ${snowpack}, ${snowfall}) ON CONFLICT (id) DO UPDATE SET temperature = ${temp}, snowpack = ${snowpack}, snowfall = ${snowfall};`;
+      db.task( 'insert data', task => {
+        return task.batch([
+            task.any(query1),
+            task.any(query2)
+        ]);
+      }).then( data => {
+        return true;
+      })
+        .catch( error => {
+          console.log(error)
+        })
 }
 
 app.get('/', (req, res) => {
@@ -156,6 +156,17 @@ app.get('/home/search_weather', function(req, res) {
             })
     });
 
+});
+
+app.get('/setting', (req, res) => {
+  console.log(req);
+  /* db.any('SELECT * FROM weather LIMIT 1;')
+  .then( data => {
+    res.send(data);
+  })
+  .catch( err => {
+    console.log(err);
+  }) */
 });
 
 app.listen(3000);
