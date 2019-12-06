@@ -4,8 +4,6 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!------>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-<script src="./resources/js/weather.js"></script>
 <link href="./resources/css/weather_scroll.css" rel="stylesheet">
 <!------>
 <style>
@@ -151,12 +149,24 @@ li a:hover {
 <div class= "heading">Weather Forecast</div>
 <!----->
 <div class="scroll-left">
-  <p>*EXAMPLE* Resort: El Dora, Condition: Absolutely Shitting Snow, Temperature: 30 degrees, Wind: 8mph *EXAMPLE*</p>
+  <p id="weather">*EXAMPLE* Resort: El Dora, Condition: Absolutely Shitting Snow, Temperature: 30 degrees, Wind: 8mph *EXAMPLE*</p>
 </div>
 <!----->
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+  $(document).ready(function() {
+    $.ajax({
+        url: "http://localhost:3000/data",  // the local Node server
+        method: 'GET',
+        success: function(data){
+            console.log(data); //display data in cosole to see if I receive it
+            document.getElementById("weather").innerHTML=`Resort: ${data.name}, Conditions: ${data.conditions}, Snowpack: ${data.snowpack}, Snow over last 24: ${data.snowfall}, Temperature: ${temp}, Wind: ${wind}`
+        }
+    })
+});
+</script>
 </body>
 </html>

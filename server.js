@@ -46,6 +46,10 @@ let db = pgp(dbConfig);
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/')); // This line is necessary for us to use relative paths and access our resources directory
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 var eldo = JSON.parse('{"name": "Eldora", "lat": "39.9372", "lng": "-105.5827"}');
 var breck = JSON.parse('{"name": "Breckenridge", "lat": " 39.480227", "lng": "-106.066698"}');
@@ -68,7 +72,6 @@ function retrieveNpost(url, resort, id){
         let temp = data['Observed Air Temperature (degrees farenheit)'];
         let query1 = "CREATE TABLE IF NOT EXISTS weather( id INT PRIMARY KEY, mountain VARCHAR(30) , temperature INT,wind INT, snowpack INT, snowfall INT, conditions VARCHAR(30));";
         let query2 = `INSERT INTO weather (id, mountain, temperature, snowpack, snowfall) VALUES (${id}, ${resort}, ${temp}, ${snowpack}, ${snowfall}) ON CONFLICT (id) DO UPDATE SET temperature = ${temp}, snowpack = ${snowpack}, snowfall = ${snowfall};`;
-        console.log(query2);
         db.task( 'insert data', task => {
           return task.batch([
               task.any(query1),
@@ -91,7 +94,16 @@ app.get('/', (req, res) => {
       var url = "http://api.powderlin.es/closest_stations?lat=" + resorts[resort].lat + "&lng=" + resorts[resort].lng + "&data=true&days=1&count=1";
       retrieveNpost(url, "'"+resorts[resort].name+"'", resort) //single quotes added to string
     }
-    res.render('/Home.html');
+});
+
+app.get('/data', (req, res) => {
+    db.any('SELECT * FROM weather LIMIT 1;')
+    .then( data => {
+      res.send(data);
+    })
+    .catch( err => {
+      console.log(err);
+    })
 });
 
 app.listen(3000);
