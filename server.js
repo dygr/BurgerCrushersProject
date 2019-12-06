@@ -1,5 +1,5 @@
 /***********************
- 
+
   Load Components!
   Express      - A Node.js Framework
   Body-Parser  - A tool to help use parse the data in a post request
@@ -23,7 +23,7 @@ const pgp = require('pg-promise')();
 
 
 /**********************
-  
+
   Database Connection information
   host: This defines the ip address of the server hosting our database.  We'll be using localhost and run our database on our local machine (i.e. can't be access via the Internet)
   port: This defines what port we can expect to communicate to our database.  We'll use 5432 to talk with PostgreSQL
@@ -58,7 +58,7 @@ var copp = JSON.parse('{"name": "Copper", "lat": "39.5021", "lng": "106.1510"}')
 var winter = JSON.parse('{"name": "Winter Park", "lat": "39.8917", "lng": "-105.7631"}');
 var resorts = [eldo, breck, vail, beav, steam, key, abay, copp, winter];
 
-//function to post data to postgres 
+//function to post data to postgres
 function retrieveNpost(url, resort, id){
     rp.get(url)
       .then( (res) => {
@@ -92,6 +92,58 @@ app.get('/', (req, res) => {
       retrieveNpost(url, "'"+resorts[resort].name+"'", resort) //single quotes added to string
     }
     res.render('/Home.html');
+});
+
+app.get('/home/search_rides', function(req, res) {
+	var destMountain = req.body.inputResortDest.value;
+	var startCity = req.body.inputStartCity.value;
+	var departDate = req.body.departDate.value;
+  var searchReq = "select * from ____ where ____ = '" + destMountain + "' and ____ = '" + startCity + "' and _____ = '" + departDate + "';"; //Need to fill in names of tables and columns
+	db.task('get-everything', task => {
+        return task.batch([
+            task.any(searchReq)
+        ]);
+    })
+    .then(info => {
+    	res.render('pages/home',{
+				my_title: "Home Page",
+				data: info[0]   //parse data depending on structure of sql table
+			})
+    })
+    .catch(error => {
+        // display error message in case an error
+            req.flash('error', error);//if this doesn't work for you replace with console.log
+            res.render('pages/home', {
+                title: 'Home Page',
+                data: ''
+            })
+    });
+
+});
+
+app.get('/home/search_weather', function(req, res) {
+	var weatherMountain = req.body.inputWeatherResort.value;
+  var searchReq1 = "select * from weather where mountain = '" + weatherMountain + "';";
+	db.task('get-everything', task => {
+        return task.batch([
+            task.any(searchReq1)
+        ]);
+    })
+    .then(info => {
+    	res.render('pages/home',{
+				my_title: "Home Page",
+				data: info[0]   //parse data depending on structure of sql table
+			})
+    })
+    .catch(error => {
+        // display error message in case an error
+            req.flash('error', error);//if this doesn't work for you replace with console.log
+            res.render('pages/home', {
+                title: 'Home Page',
+                data: ''
+            })
+    });
+
 });
 
 app.listen(3000);
