@@ -70,6 +70,24 @@ function retrieveNpost(url, resort, id){
         let snowpack = data['Snow Depth (in)'];
         let snowfall = data['Change In Snow Depth (in)'];
         let temp = data['Observed Air Temperature (degrees farenheit)'];
+        let query1 = "CREATE TABLE IF NOT EXISTS weather( id INT PRIMARY KEY, mountain VARCHAR(30) , temperature INT,wind INT, snowpack INT, snowfall INT, conditions VARCHAR(30));";
+        let query2 = `INSERT INTO weather (id, mountain, temperature, snowpack, snowfall) VALUES (${id}, ${resort}, ${temp}, ${snowpack}, ${snowfall}) ON CONFLICT (id) DO UPDATE SET temperature = ${temp}, snowpack = ${snowpack}, snowfall = ${snowfall};`;
+        let query3 = "CREATE TABLE IF NOT EXISTS users( user_id int PRIMARY KEY, name VARCHAR(20), email VARCHAR(20), password VARCHAR(20), age INT, car VARCHAR(50), car_color VARCHAR(20), license VARCHAR(10));";
+        let query4 = "CREATE TABLE IF NOT EXISTS available_rides(ride_id VARCHAR(10) NOT NULL,	user_id VARCHAR(30) NOT NULL,	ride_date DATE NOT NULL, ride_time TIME NOT NULL,	dest_mountain VARCHAR(30) NOT NULL, start_city VARCHAR(20), ride_cost SMALLINT NOT NULL, open_seats SMALLINT NOT NULL, optional_notes TEXT, PRIMARY KEY(ride_id);";
+        console.log(query2);
+        db.task( 'insert data', task => {
+          return task.batch([
+              task.any(query1),
+              task.any(query2),
+              task.any(query3),
+              task.any(query4)
+          ]);
+        }).then( data => {
+          return true;
+        })
+          .catch( error => {
+            console.log(error)
+          })
       })
       .catch( (err) => {
         console.log(err)
@@ -110,28 +128,21 @@ app.get('/home/search_rides', function(req, res) {
 	var destMountain = req.body.inputResortDest.value;
 	var startCity = req.body.inputStartCity.value;
 	var departDate = req.body.departDate.value;
-  var searchReq = "select * from ____ where ____ = '" + destMountain + "' and ____ = '" + startCity + "' and _____ = '" + departDate + "';"; //Need to fill in names of tables and columns
+  var searchReq = "select * from available_rides where dest_mountain = '" + destMountain + "' and  start_city = '" + startCity + "' and ride_date = '" + departDate + "';"; //Need to fill in names of tables and columns
 	db.task('get-everything', task => {
         return task.batch([
             task.any(searchReq)
         ]);
     })
     .then(info => {
-    	res.render('pages/home',{
-				my_title: "Home Page",
-				data: info[0]   //parse data depending on structure of sql table
-			})
+    	res.send(info)
     })
     .catch(error => {
         // display error message in case an error
-            req.flash('error', error);//if this doesn't work for you replace with console.log
-            res.render('pages/home', {
-                title: 'Home Page',
-                data: ''
-            })
-    });
-
+            console.log(err)
+    })
 });
+
 
 app.get('/home/search_weather', function(req, res) {
 	var weatherMountain = req.body.inputWeatherResort.value;
@@ -141,22 +152,16 @@ app.get('/home/search_weather', function(req, res) {
             task.any(searchReq1)
         ]);
     })
-    .then(info => {
-    	res.render('pages/home',{
-				my_title: "Home Page",
-				data: info[0]   //parse data depending on structure of sql table
-			})
+    .then(info1 => {
+    	res.send(info1)
     })
     .catch(error => {
         // display error message in case an error
-            req.flash('error', error);//if this doesn't work for you replace with console.log
-            res.render('pages/home', {
-                title: 'Home Page',
-                data: ''
-            })
-    });
-
+          console.log(err)
+    })
 });
+
+
 
 app.post('/setting', (req, res) => {
   console.log(req.body);
