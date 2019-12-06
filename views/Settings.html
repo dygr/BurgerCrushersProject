@@ -41,28 +41,26 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script>
         function submitRide(){
-<<<<<<< HEAD
-          $.ajax({
-              method: 'POST',
-              url: "http://localhost:3000/setting",  // the local Node server
-              success: function(data){
-                
-              }
-          })
-          .then(data => {
-            
-=======
           var date = $("#dateTime").val();
           var pay = $("#pay2Input").val();
           var slots = $("#slotsInput").val();
           var resort = $("#resort1").val();
           var description = $("#driverRideDescription").val();
-          var array = [date, pay, slots, resort, description];
+          var obj = `{"date": ${date}, "pay": ${pay}, "slots": ${slots}, "resort:" ${resort}, "description:" ${description}}`;
           $.ajax({
               method: 'POST',
-              url: "http://localhost:3000/settings",  // the local Node server
-              data: array
->>>>>>> 8cd80c97e93e150e7acb369617fd0b5bc849446f
+              url: "http://localhost:3000/setting",  // the local Node server
+              data: {
+                "date": date,
+                "pay": pay,
+                "slots": slots,
+                "resort": resort,
+                "description": description
+              },
+              dataType: "text"
+          })
+          .then(data => {
+            
           })
         }
         function submitInfo(){

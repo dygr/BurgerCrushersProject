@@ -160,13 +160,13 @@ app.get('/home/search_weather', function(req, res) {
 
 app.post('/setting', (req, res) => {
   console.log(req.body);
-  /* db.any('SELECT * FROM weather LIMIT 1;')
+  db.any('SELECT * FROM weather LIMIT 1;')
   .then( data => {
     res.send(data);
   })
   .catch( err => {
     console.log(err);
-  }) */
+  })
 });
 
 app.listen(3000);
