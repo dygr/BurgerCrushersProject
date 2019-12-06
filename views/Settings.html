@@ -46,17 +46,28 @@
           var slots = $("#slotsInput").val();
           var resort = $("#resort1").val();
           var description = $("#driverRideDescription").val();
-          var array = [date, pay, slots, resort, description];
+          var start = $("#start1").val();
           $.ajax({
               method: 'POST',
-              url: "http://localhost:3000/settings",  // the local Node server
-              data: array
+              url: "http://localhost:3000/setting",  // the local Node server
+              data: {
+                "date": date,
+                "pay": pay,
+                "slots": slots,
+                "resort": resort,
+                "description": description,
+                "start": start
+              },
+              dataType: "text"
+          })
+          .then(data => {
+
           })
         }
         function submitInfo(){
           $.ajax({
-              url: "http://localhost:3000/data",  // the local Node server
-              method: 'PUT',
+              url: "http://localhost:3000/setting",  // the local Node server
+              method: 'POST',
               success: function(data){
                   console.log("test2"); //display data in cosole to see if I receive it
               }
@@ -148,9 +159,18 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="DriverRideDescription"><h4 style="color:#002266;">Ride details</h4>
+                        <label for="resort1"><h5>Starting City</h5></label>
+                        <select class="form-control" id="start1">
+                          <option>Colorado Springs</option>
+                          <option>Denver</option>
+                          <option>Boulder</option>
+                          <option>Fort Collins</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="DriverRideDescription"><h4 style="color:#002266;">Contact Info and Details</h4>
                           <p>
-                            Describe your preferred meeting address, neighborhood or city, as well as any other
+                            Give your email or phone number, preferred meeting address, neighborhood or city, as well as any other
                             details you want to share with potential riders! This could include schedule/location flexibility,
                             vehicle type, preferred payment method, music tastes, etc.
                           </p>
