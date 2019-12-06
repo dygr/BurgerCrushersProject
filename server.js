@@ -158,5 +158,9 @@ app.get('/home/search_weather', function(req, res) {
 
 });
 
+app.get('/settings', (req, res) => {
+    console.log(req);
+});
+
 app.listen(3000);
 console.log('3000 is the magic port');
