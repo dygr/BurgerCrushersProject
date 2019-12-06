@@ -73,7 +73,7 @@ function retrieveNpost(url, resort, id){
         let query1 = "CREATE TABLE IF NOT EXISTS weather( id INT PRIMARY KEY, mountain VARCHAR(30) , temperature INT,wind INT, snowpack INT, snowfall INT, conditions VARCHAR(30));";
         let query2 = `INSERT INTO weather (id, mountain, temperature, snowpack, snowfall) VALUES (${id}, ${resort}, ${temp}, ${snowpack}, ${snowfall}) ON CONFLICT (id) DO UPDATE SET temperature = ${temp}, snowpack = ${snowpack}, snowfall = ${snowfall};`;
         let query3 = "CREATE TABLE IF NOT EXISTS users( user_id int PRIMARY KEY, name VARCHAR(20), email VARCHAR(20), password VARCHAR(20), age INT, car VARCHAR(50), car_color VARCHAR(20), license VARCHAR(10));";
-        let query4 = "CREATE TABLE IF NOT EXISTS available_rides(ride_id VARCHAR(10) NOT NULL,	user_id VARCHAR(30) NOT NULL,	ride_date DATE NOT NULL, ride_time TIME NOT NULL,	dest_mountain VARCHAR(30) NOT NULL, start_city VARCHAR(20), ride_cost SMALLINT NOT NULL, open_seats SMALLINT NOT NULL, optional_notes TEXT, PRIMARY KEY(ride_id);";
+        let query4 = "CREATE TABLE IF NOT EXISTS available_rides(ride_id INT SERIAL PRIMARY KEY,	user_id VARCHAR(30) NOT NULL,	ride_date VARCHAR(30) NOT NULL, ride_time VARCHAR(30) NOT NULL,	dest_mountain VARCHAR(30) NOT NULL, start_city VARCHAR(20), ride_cost SMALLINT NOT NULL, open_seats SMALLINT NOT NULL, optional_notes TEXT, PRIMARY KEY(ride_id);";
         console.log(query2);
         db.task( 'insert data', task => {
           return task.batch([
@@ -162,10 +162,9 @@ app.get('/home/search_weather', function(req, res) {
 });
 
 
-
 app.post('/setting', (req, res) => {
   console.log(req.body);
-  db.any('SELECT * FROM weather LIMIT 1;')
+  db.any(`INSERT INTO available_rides (ride_date, ride_time, dest_mountain, start_city, ride_cost, open_seats, optional_notes) VALUES ${req.body.date}, ${req.body.date}, ${req.body.resort}, ${req.body.start}, ${req.body.pay}, ${req.body.slots}, ${req.body.description};`)
   .then( data => {
     res.send(data);
   })
