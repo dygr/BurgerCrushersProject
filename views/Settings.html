@@ -46,6 +46,7 @@
           var slots = $("#slotsInput").val();
           var resort = $("#resort1").val();
           var description = $("#driverRideDescription").val();
+          var start = $("#start1").val();
           var array = [date, pay, slots, resort, description];
           $.ajax({
               method: 'POST',
@@ -145,6 +146,15 @@
                           <option>Arapahoe Basin</option>
                           <option>Winter Park</option>
                           <option>Copper</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="resort1"><h5>Starting City</h5></label>
+                        <select class="form-control" id="start1">
+                          <option>Colorado Springs</option>
+                          <option>Denver</option>
+                          <option>Boulder</option>
+                          <option>Fort Collins</option>
                         </select>
                       </div>
                       <div class="form-group">
