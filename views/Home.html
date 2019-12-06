@@ -3,6 +3,7 @@
 <head>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
 <!------>
 <link href="./resources/css/weather_scroll.css" rel="stylesheet">
 <!------>
@@ -92,6 +93,13 @@ li a:hover {
   width: 50%
 }
 
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 15px;
+}
 </style>
 </head>
 <body>
@@ -115,24 +123,30 @@ li a:hover {
 <br>
 <div class="heading">Search For Rides</div>
 <br>
+<form action="/Home/search_rides" method="post">
+
 <div class="input-group mb-3">
-  <select class="custom-select" id="inputGroupSelect01">
+  <select class="custom-select" id="inputResortDest">
     <option selected>Select a Ski Resort Destination</option>
-    <option value="1">Winter Park</option>
-    <option value="2">Breckenridge</option>
-    <option value="3">Steamboat Springs</option>
-    <option value="4">Aspen</option>
-    <option value="3">Copper</option>
+    <option value="Winter Park">Winter Park</option>
+    <option value="Breckenridge">Breckenridge</option>
+    <option value="Steamboat Springs">Steamboat Springs</option>
+    <option value="Eldora">Eldora</option>
+    <option value="Copper">Copper</option>
+    <option value="Vail">Vail</option>
+    <option value="Beaver Creek">Beaver Creek</option>
+    <option value="Keystone">Keystone</option>
+    <option value="Arapahoe Basin">Arapahoe Basin</option>
   </select>
 </div>
 
 <div class="input-group mb-3">
-  <select class="custom-select" id="inputGroupSelect01">
+  <select class="custom-select" id="inputStartCity">
     <option selected>Select Starting City</option>
-    <option value="1">Colorado Springs</option>
-    <option value="2">Denver</option>
-    <option value="3">Boulder</option>
-    <option value="4">Fort Collins</option>
+    <option value="Colorado Springs">Colorado Springs</option>
+    <option value="Denver">Denver</option>
+    <option value="Boulder">Boulder</option>
+    <option value="Fort Collins">Fort Collins</option>
   </select>
 </div>
 
@@ -140,16 +154,77 @@ li a:hover {
   <div class="input-group-prepend">
     <span class="input-group-text" id="basic-addon1">Ride Date</span>
   </div>
-  <input type="text" class="form-control" placeholder="MM/DD" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" class="form-control" placeholder="MM/DD" aria-label="Username" aria-describedby="basic-addon1" id="dateInput">
 </div>
 
-<button type="submit" class="btn btn-secondary">Search</button>
+
+<button type="submit" class="btn btn-secondary" onclick="" hidden="false">Search</button>
+
+</form>
+<br>
+<br>
+<table style="width:100%" id="rideTable">
+  <tr>
+    <th>Ride Date</th>
+    <th>Departure Time</th>
+    <th>Starting Location</th>
+    <th>Destination Mountain</th>
+    <th>Available Seats</th>
+    <th>Driver Name</th>
+    <th>Additional Info</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
 <br>
 
 <div class= "heading">Weather Forecast</div>
+<br>
+<form action="/Home/search_weather" method="post">
+
+<div class="input-group mb-3">
+  <select class="custom-select" id="inputWeatherResort">
+    <option selected>Select a Ski Resort To Recieve Weather Report</option>
+    <option value="Winter Park">Winter Park</option>
+    <option value="Breckenridge">Breckenridge</option>
+    <option value="Steamboat Springs">Steamboat Springs</option>
+    <option value="Eldora">Eldora</option>
+    <option value="Copper">Copper</option>
+    <option value="Vail">Vail</option>
+    <option value="Beaver Creek">Beaver Creek</option>
+    <option value="Keystone">Keystone</option>
+    <option value="Arapahoe Basin">Arapahoe Basin</option>
+  </select>
+</div>
+
+<button type="submit" class="btn btn-secondary">Search</button>
+
+</form>
+<br>
 <!----->
+<<<<<<< HEAD
 <div class="scroll-left">
   <p id="weather">*EXAMPLE* Resort: El Dora, Condition: Absolutely Shitting Snow, Temperature: 30 degrees, Wind: 8mph *EXAMPLE*</p>
+=======
+<div class="scroll-left" id="weatherScroll">
+  <p>*EXAMPLE* Resort: El Dora, Condition: Absolutely Shitting Snow, Temperature: 30 degrees, Wind: 8mph *EXAMPLE*</p>
+>>>>>>> 39b09e1e3d8f5e7bdbe461e50368b6231f199252
 </div>
 <!----->
 
