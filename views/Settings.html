@@ -48,15 +48,6 @@
           var resort = $("#resort1").val();
           var description = $("#driverRideDescription").val();
           var array = [date, pay, slots, resort, description];
-=======
-<<<<<<< HEAD
-
-=======
-          console.log($("#dateTime").val());
-          console.log($("#pay2Input").val());
-          console.log($("#slotsInput").val());
-          console.log($("#resort1").val());
-          console.log($("#driverRideDescription").val());
 >>>>>>> 518b417be1b142267a166a816d4d74b0b90ce370
 >>>>>>> 58e773961a207abdfe9909d877c3b38063597312
           $.ajax({
@@ -65,7 +56,10 @@
               data: array
           })
           .then(data => {
-            
+
+          })
+          .then(data => {
+
           })
         }
         function submitInfo(){
