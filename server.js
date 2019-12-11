@@ -16,7 +16,7 @@ const bodyParser = require('body-parser'); // Add the body-parser tool has been 
 app.use(bodyParser.json());              // Add support for JSON encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Add support for URL encoded bodies
 
-const pug = require('pug'); // Add the 'pug' view engine
+const html = require('html'); // Add the 'pug' view engine
 
 //Create Database Connection
 const pgp = require('pg-promise')();
@@ -43,8 +43,8 @@ const dbConfig = {
 
 let db = pgp(dbConfig);
 
-app.set('view engine', 'pug');
-app.use(express.static(__dirname + '/')); // This line is necessary for us to use relative paths and access our resources directory
+app.set('view engine', html);
+app.use(express.static(__dirname + '/views/')); // This line is necessary for us to use relative paths and access our resources directory
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -70,41 +70,25 @@ function retrieveNpost(url, resort, id){
         let snowpack = data['Snow Depth (in)'];
         let snowfall = data['Change In Snow Depth (in)'];
         let temp = data['Observed Air Temperature (degrees farenheit)'];
+        console.log("data:::::::::::::::::::\n", temp)
         let query1 = "CREATE TABLE IF NOT EXISTS weather( id INT PRIMARY KEY, mountain VARCHAR(30) , temperature INT,wind INT, snowpack INT, snowfall INT, conditions VARCHAR(30));";
         let query2 = `INSERT INTO weather (id, mountain, temperature, snowpack, snowfall) VALUES (${id}, ${resort}, ${temp}, ${snowpack}, ${snowfall}) ON CONFLICT (id) DO UPDATE SET temperature = ${temp}, snowpack = ${snowpack}, snowfall = ${snowfall};`;
-        let query3 = "CREATE TABLE IF NOT EXISTS users( user_id int SERIAL PRIMARY KEY, name VARCHAR(20), email VARCHAR(20), password VARCHAR(20), age INT, car VARCHAR(50), car_color VARCHAR(20), license VARCHAR(10));";
-        let query4 = "CREATE TABLE IF NOT EXISTS available_rides(ride_id VARCHAR(10) SERIAL PRIMARY KEY,	user_id VARCHAR(30) NOT NULL,	ride_date VARCHAR(30) NOT NULL, ride_time TIME NOT NULL,	dest_mountain VARCHAR(30) NOT NULL, start_city VARCHAR(20), ride_cost SMALLINT NOT NULL, open_seats SMALLINT NOT NULL, optional_notes TEXT, PRIMARY KEY(ride_id);";
         console.log(query2);
         db.task( 'insert data', task => {
           return task.batch([
               task.any(query1),
               task.any(query2),
-              task.any(query3),
-              task.any(query4)
           ]);
         }).then( data => {
           return true;
         })
           .catch( error => {
-            console.log(error)
+            console.log(error);
           })
       })
       .catch( (err) => {
         console.log(err)
       })
-      let query1 = "CREATE TABLE IF NOT EXISTS weather( id INT PRIMARY KEY, mountain VARCHAR(30) , temperature INT,wind INT, snowpack INT, snowfall INT, conditions VARCHAR(30));";
-      let query2 = `INSERT INTO weather (id, mountain, temperature, snowpack, snowfall) VALUES (${id}, ${resort}, ${temp}, ${snowpack}, ${snowfall}) ON CONFLICT (id) DO UPDATE SET temperature = ${temp}, snowpack = ${snowpack}, snowfall = ${snowfall};`;
-      db.task( 'insert data', task => {
-        return task.batch([
-            task.any(query1),
-            task.any(query2)
-        ]);
-      }).then( data => {
-        return true;
-      })
-        .catch( error => {
-          console.log(error)
-        })
 }
 
 app.get('/', (req, res) => {
@@ -112,6 +96,23 @@ app.get('/', (req, res) => {
       var url = "http://api.powderlin.es/closest_stations?lat=" + resorts[resort].lat + "&lng=" + resorts[resort].lng + "&data=true&days=1&count=1";
       retrieveNpost(url, "'"+resorts[resort].name+"'", resort) //single quotes added to string
     }
+    let query1 = "CREATE TABLE IF NOT EXISTS users( user_id int SERIAL PRIMARY KEY, name VARCHAR(20), email VARCHAR(20), password VARCHAR(20), age INT, car VARCHAR(50), car_color VARCHAR(20), license VARCHAR(10));";
+    let query2 = "CREATE TABLE IF NOT EXISTS available_rides(ride_id INT SERIAL PRIMARY KEY,	user_id VARCHAR(30) NOT NULL,	ride_date VARCHAR(30) NOT NULL, ride_time TIME NOT NULL,	dest_mountain VARCHAR(30) NOT NULL, start_city VARCHAR(20), ride_cost SMALLINT NOT NULL, open_seats SMALLINT NOT NULL, optional_notes TEXT, PRIMARY KEY(ride_id));";
+    console.log("create tables");
+    db.task( 'insert data', task => {
+      return task.batch([
+          task.any(query1),
+          task.any(query2),
+      ]);
+    }).then( data => {
+      console.log(data);
+    })
+      .catch( error => {
+        console.log(error);
+      })
+    res.render('Home', {
+      
+    });
 });
 
 app.get('/data', (req, res) => {
@@ -139,7 +140,7 @@ app.get('/home/search_rides', function(req, res) {
     })
     .catch(error => {
         // display error message in case an error
-            console.log(err)
+          console.log(err)
     })
 });
 
@@ -162,10 +163,11 @@ app.get('/home/search_weather', function(req, res) {
 });
 
 
-
 app.post('/setting', (req, res) => {
   console.log(req.body);
-  db.any('SELECT * FROM weather LIMIT 1;')
+  var query = `INSERT INTO available_rides (ride_date, ride_time, dest_mountain, start_city, ride_cost, open_seats, optional_notes) VALUES ('${req.body.date}', '${req.body.date}', '${req.body.resort}', '${req.body.start}', ${req.body.pay}, ${req.body.slots}, '${req.body.description}');`
+  console.log(query);
+  db.any(query)
   .then( data => {
     res.send(data);
   })

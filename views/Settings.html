@@ -46,7 +46,7 @@
           var slots = $("#slotsInput").val();
           var resort = $("#resort1").val();
           var description = $("#driverRideDescription").val();
-          var obj = `{"date": ${date}, "pay": ${pay}, "slots": ${slots}, "resort:" ${resort}, "description:" ${description}}`;
+          var start = $("#start1").val();
           $.ajax({
               method: 'POST',
               url: "http://localhost:3000/setting",  // the local Node server
@@ -55,12 +55,13 @@
                 "pay": pay,
                 "slots": slots,
                 "resort": resort,
-                "description": description
+                "description": description,
+                "start": start
               },
               dataType: "text"
           })
           .then(data => {
-            
+
           })
         }
         function submitInfo(){
