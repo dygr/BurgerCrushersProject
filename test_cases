@@ -1,0 +1,23 @@
+Test Plan:
+	We will test the following cases multiple times by creating fake user profiles to act as users on the website. 
+  The fake profiles will create and select rides as well as have unique profile information. This way we can test 
+  out the information put into our database and our html forms. Unique values will also be tested as inputs into 
+  the database to ensure no errors are created in the tables.
+    
+Test Cases:
+1. Creating a user profile
+    a. User will enter the sign-up page from the home or login pages
+    b. User completes sign-up form with email and login information entered as data
+    c. User will then be directed to the settings page to enter profile information, 
+       which is stored in a table in the database 
+2. Selecting a driver posted ride as a rider
+    a. A driver has the ability to upload a ride at a specified time and date to the mountain of their choosing. 
+       We created a table, ride_id, using PostgreSQL in which rides available will be logged. 
+    b. The rider will be able to see the list of rides available on their homepage and select a ride.
+    c. Once the ride is selected, the ride should be removed from the ride_id table.
+3. Looking at a weather report for a specific mountain
+    a. A user will be able to search through a list of local mountains and view the temperature and snowfall at 
+       various resorts. The data is stored in a table containing the different mountains rides are offered to.
+    b. User will go to homepage and use the drop down menu to select a mountain.
+    c. The once the mountain is selected, the homepage will display the given temperature based on the data stored 
+       in the weather_id table. 
