@@ -70,10 +70,8 @@ function retrieveNpost(url, resort, id){
         let snowpack = data['Snow Depth (in)'];
         let snowfall = data['Change In Snow Depth (in)'];
         let temp = data['Observed Air Temperature (degrees farenheit)'];
-        console.log("data:::::::::::::::::::\n", temp)
         let query1 = "CREATE TABLE IF NOT EXISTS weather( id INT PRIMARY KEY, mountain VARCHAR(30) , temperature INT,wind INT, snowpack INT, snowfall INT, conditions VARCHAR(30));";
         let query2 = `INSERT INTO weather (id, mountain, temperature, snowpack, snowfall) VALUES (${id}, ${resort}, ${temp}, ${snowpack}, ${snowfall}) ON CONFLICT (id) DO UPDATE SET temperature = ${temp}, snowpack = ${snowpack}, snowfall = ${snowfall};`;
-        console.log(query2);
         db.task( 'insert data', task => {
           return task.batch([
               task.any(query1),
@@ -96,8 +94,8 @@ app.get('/', (req, res) => {
       var url = "http://api.powderlin.es/closest_stations?lat=" + resorts[resort].lat + "&lng=" + resorts[resort].lng + "&data=true&days=1&count=1";
       retrieveNpost(url, "'"+resorts[resort].name+"'", resort) //single quotes added to string
     }
-    let query1 = "CREATE TABLE IF NOT EXISTS users( user_id int SERIAL PRIMARY KEY, name VARCHAR(20), email VARCHAR(20), password VARCHAR(20), age INT, car VARCHAR(50), car_color VARCHAR(20), license VARCHAR(10));";
-    let query2 = "CREATE TABLE IF NOT EXISTS available_rides(ride_id INT SERIAL PRIMARY KEY,	user_id VARCHAR(30) NOT NULL,	ride_date VARCHAR(30) NOT NULL, ride_time TIME NOT NULL,	dest_mountain VARCHAR(30) NOT NULL, start_city VARCHAR(20), ride_cost SMALLINT NOT NULL, open_seats SMALLINT NOT NULL, optional_notes TEXT, PRIMARY KEY(ride_id));";
+    let query1 = "CREATE TABLE IF NOT EXISTS users( user_id SERIAL PRIMARY KEY, name VARCHAR(20), email VARCHAR(20), password VARCHAR(20), age INT, car VARCHAR(50), car_color VARCHAR(20), license VARCHAR(10));";
+    let query2 = "CREATE TABLE IF NOT EXISTS available_rides(ride_id SERIAL PRIMARY KEY,	user_id SERIAL NOT NULL,	ride_date VARCHAR(30) NOT NULL, ride_time TIME NOT NULL,	dest_mountain VARCHAR(30) NOT NULL, start_city VARCHAR(20), ride_cost SMALLINT NOT NULL, open_seats SMALLINT NOT NULL, optional_notes TEXT);";
     console.log("create tables");
     db.task( 'insert data', task => {
       return task.batch([
@@ -110,9 +108,6 @@ app.get('/', (req, res) => {
       .catch( error => {
         console.log(error);
       })
-    res.render('Home', {
-      
-    });
 });
 
 app.get('/data', (req, res) => {
@@ -159,14 +154,13 @@ app.get('/home/search_weather', function(req, res) {
     .catch(error => {
         // display error message in case an error
           console.log(err)
-    })
+            })
 });
 
 
 app.post('/setting', (req, res) => {
   console.log(req.body);
   var query = `INSERT INTO available_rides (ride_date, ride_time, dest_mountain, start_city, ride_cost, open_seats, optional_notes) VALUES ('${req.body.date}', '${req.body.date}', '${req.body.resort}', '${req.body.start}', ${req.body.pay}, ${req.body.slots}, '${req.body.description}');`
-  console.log(query);
   db.any(query)
   .then( data => {
     res.send(data);
