@@ -100,6 +100,7 @@ table, th, td {
 th, td {
   padding: 15px;
 }
+
 </style>
 </head>
 <body>
@@ -191,28 +192,24 @@ th, td {
 </table>
 <br>
 
-<div class= "heading">Weather Forecast</div>
-<br>
-<form action="/Home/search_weather" method="get">
-
-<div class="input-group mb-3">
-  <select class="custom-select" id="inputWeatherResort">
-    <option selected>Select a Ski Resort To Recieve Weather Report</option>
-    <option value="Winter Park">Winter Park</option>
-    <option value="Breckenridge">Breckenridge</option>
-    <option value="Steamboat Springs">Steamboat Springs</option>
-    <option value="Eldora">Eldora</option>
-    <option value="Copper">Copper</option>
-    <option value="Vail">Vail</option>
-    <option value="Beaver Creek">Beaver Creek</option>
-    <option value="Keystone">Keystone</option>
-    <option value="Arapahoe Basin">Arapahoe Basin</option>
-  </select>
+<div class="asuh">
+  <div class= "heading">Weather Forecast</div>
+  <div class="input-group mb-3" id="asuh">
+    <select class="custom-select" id="inputWeatherResort" onchange="getWeather()">
+      <option selected>Select a Ski Resort To Recieve Weather Report</option>
+      <option value="Winter Park">Winter Park</option>
+      <option value="Breckenridge">Breckenridge</option>
+      <option value="Steamboat Springs">Steamboat Springs</option>
+      <option value="Eldora">Eldora</option>
+      <option value="Copper">Copper</option>
+      <option value="Vail">Vail</option>
+      <option value="Beaver Creek">Beaver Creek</option>
+      <option value="Keystone">Keystone</option>
+      <option value="Arapahoe Basin">Arapahoe Basin</option>
+    </select>
+  </div>
 </div>
 
-<button type="submit" class="btn btn-secondary">Search</button>
-
-</form>
 <br>
 <!----->
 <div class="scroll-left">
@@ -224,18 +221,20 @@ th, td {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script>
-  $(document).ready(function() {
+  function getWeather() {
+    let m = document.getElementById("inputWeatherResort").value;
     $.ajax({
-        url: "http://localhost:3000/data",  // the local Node server
+        url: `http://localhost:3000/search_weather`,  // the local Node server
         method: 'GET',
+        data: {
+          mountain: m },
         success: function(data){
-            let st = "Resort: "+data[0].mountain+", Conditions: "+data[0].conditions+", Snowpack: "+data[0].snowpack+" in. , Snow over last 24: "+data[0].snowfall+" in. , Temperature: "+data[0].temperature+"°F, Wind: "+data[0].wind+"mph";
-            console.log(data[0])
+            let st = `Resort: ${data[0].mountain}, Conditions: ${data[0].conditions}, Snowpack: ${data[0].snowpack ? data[0].snowpack : 0} in. , Snow over last 24: ${data[0].snowfall ? data[0].snowfall : 0} in. , Temperature: ${data[0].temperature}°F, Wind: ${data[0].wind}mph`;
             document.getElementById("weather").innerHTML=st
           }
     })
 
-});
+}
 
 function get_rides() {
   $.ajax({

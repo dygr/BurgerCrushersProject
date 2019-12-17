@@ -54,10 +54,10 @@ app.use((req, res, next) => {
 });
 
 var eldo = JSON.parse('{"name": "Eldora", "lat": "39.9372", "lng": "-105.5827"}');
-var breck = JSON.parse('{"name": "Breckenridge", "lat": " 39.480227", "lng": "-106.066698"}');
+var breck = JSON.parse('{"name": "Breckenridge", "lat": "39.480227", "lng": "-106.066698"}');
 var vail = JSON.parse('{"name": "Vail", "lat": "39.6403", "lng": "-106.3742"}')
 var beav = JSON.parse('{"name": "Beaver Creek", "lat": "39.6042", "lng": "-106.5165"}');
-var steam = JSON.parse('{"name": "Steamboat", "lat": "40.4850", "lng": "-106.8317"}');
+var steam = JSON.parse('{"name": "Steamboat Springs", "lat": "40.4850", "lng": "-106.8317"}');
 var key = JSON.parse('{"name": "Keystone", "lat": "39.5792", "lng": "-105.9347"}');
 var abay = JSON.parse('{"name": "Arapahoe Basin", "lat": "39.6425", "lng": "-105.8719"}');
 var copp = JSON.parse('{"name": "Copper", "lat": "39.5021", "lng": "106.1510"}');
@@ -65,25 +65,33 @@ var winter = JSON.parse('{"name": "Winter Park", "lat": "39.8917", "lng": "-105.
 var resorts = [eldo, breck, vail, beav, steam, key, abay, copp, winter];
 
 //function to post data to postgres
-function retrieveNpost(url, resort, id){
+function retrieveNpost(url, resort, id, url2){
     rp.get(url)
       .then( (res) => {
         let data = JSON.parse(res)[0].data[1];
         let snowpack = data['Snow Depth (in)'];
         let snowfall = data['Change In Snow Depth (in)'];
         let temp = data['Observed Air Temperature (degrees farenheit)'];
-        let query1 = "CREATE TABLE IF NOT EXISTS weather( id INT PRIMARY KEY, mountain VARCHAR(30) , temperature INT,wind INT, snowpack INT, snowfall INT, conditions VARCHAR(30));";
-        let query2 = `INSERT INTO weather (id, mountain, temperature, snowpack, snowfall) VALUES (${id}, ${resort}, ${temp}, ${snowpack}, ${snowfall}) ON CONFLICT (id) DO UPDATE SET temperature = ${temp}, snowpack = ${snowpack}, snowfall = ${snowfall};`;
-        db.task( 'insert data', task => {
-          return task.batch([
-              task.any(query1),
-              task.any(query2),
-          ]);
-        }).then( data => {
-          return true;
-        })
-          .catch( error => {
-            console.log(error);
+        rp.get(url2)
+          .then( (res2) =>{
+            let wind = JSON.parse(res2).currently.windSpeed;
+            let conditions = JSON.parse(res2).currently.summary;
+            let query1 = "CREATE TABLE IF NOT EXISTS weather( id INT PRIMARY KEY, mountain VARCHAR(30) , temperature INT,wind INT, snowpack INT, snowfall INT, conditions VARCHAR(30));";
+            let query2 = `INSERT INTO weather (id, mountain, temperature, snowpack, snowfall, wind, conditions) VALUES (${id}, ${resort}, ${temp}, ${snowpack}, ${snowfall}, ${wind}, '${conditions}') ON CONFLICT (id) DO UPDATE SET temperature = ${temp}, snowpack = ${snowpack}, snowfall = ${snowfall};`;
+            db.task( 'insert data', task => {
+              return task.batch([
+                  task.any(query1),
+                  task.any(query2),
+              ]);
+            }).then( data => {
+              return true;
+            })
+              .catch( error => {
+                console.log(error);
+              })
+          })
+          .catch( (err) => {
+            console.log(err)
           })
       })
       .catch( (err) => {
@@ -91,10 +99,11 @@ function retrieveNpost(url, resort, id){
       })
 }
 
-app.get('/', (req, res) => {
+app.get('/Home.html', (req, res) => {
     for (resort in resorts){
       var url = "http://api.powderlin.es/closest_stations?lat=" + resorts[resort].lat + "&lng=" + resorts[resort].lng + "&data=true&days=1&count=1";
-      retrieveNpost(url, "'"+resorts[resort].name+"'", resort) //single quotes added to string
+      var url2 = `https://api.darksky.net/forecast/0bb64cbe7d94b50e33c824e088f2c9f7/${resorts[resort].lat},${resorts[resort].lng}`;
+      retrieveNpost(url, "'"+resorts[resort].name+"'", resort, url2) //single quotes added to string
     }
     let query1 = "CREATE TABLE IF NOT EXISTS users( user_id SERIAL PRIMARY KEY, name VARCHAR(20), email VARCHAR(20), password VARCHAR(20), age INT, car VARCHAR(50), car_color VARCHAR(20), license VARCHAR(10));";
     let query2 = "CREATE TABLE IF NOT EXISTS available_rides(ride_id SERIAL PRIMARY KEY,	user_id SERIAL NOT NULL,	ride_date VARCHAR(30) NOT NULL, ride_time TIME NOT NULL,	dest_mountain VARCHAR(30) NOT NULL, start_city VARCHAR(20), ride_cost SMALLINT NOT NULL, open_seats SMALLINT NOT NULL, optional_notes TEXT);";
@@ -107,7 +116,7 @@ app.get('/', (req, res) => {
       //do nothing
     })
       .catch( error => {
-        console.log(error);
+        //console.log(error);
       })
     res.sendFile(path.join(__dirname, './views', 'Home.html'));
 });
@@ -142,8 +151,8 @@ app.get('/home/search_rides', function(req, res) {
 });
 
 
-app.get('/home/search_weather', function(req, res) {
-	var weatherMountain = req.body.inputWeatherResort.value;
+app.get('/search_weather', function(req, res) {
+  var weatherMountain = req.query.mountain;
   var searchReq1 = "select * from weather where mountain = '" + weatherMountain + "';";
 	db.task('get-everything', task => {
         return task.batch([
@@ -151,12 +160,12 @@ app.get('/home/search_weather', function(req, res) {
         ]);
     })
     .then(info1 => {
-    	res.send(info1)
+    	res.send(info1[0])
     })
     .catch(error => {
         // display error message in case an error
-          console.log(err)
-            })
+          console.log(error)
+    })
 });
 
 
