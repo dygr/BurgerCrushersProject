@@ -105,7 +105,7 @@ app.get('/Home.html', (req, res) => {
       var url2 = `https://api.darksky.net/forecast/0bb64cbe7d94b50e33c824e088f2c9f7/${resorts[resort].lat},${resorts[resort].lng}`;
       retrieveNpost(url, "'"+resorts[resort].name+"'", resort, url2) //single quotes added to string
     }
-    let query1 = "CREATE TABLE IF NOT EXISTS users( user_id SERIAL PRIMARY KEY, name VARCHAR(30), email VARCHAR(30), password VARCHAR(20), age INT, car VARCHAR(50), car_color VARCHAR(20), license VARCHAR(15));";
+    let query1 = "CREATE TABLE IF NOT EXISTS users( user_id SERIAL PRIMARY KEY, name VARCHAR(30), email VARCHAR(30) UNIQUE, password VARCHAR(20), is18 BOOL, isDriver BOOL, car VARCHAR(50), car_color VARCHAR(20), license VARCHAR(15));";
     let query2 = "CREATE TABLE IF NOT EXISTS available_rides(ride_id SERIAL PRIMARY KEY,	user_id SERIAL NOT NULL,	ride_date VARCHAR(30) NOT NULL, ride_time TIME NOT NULL,	dest_mountain VARCHAR(30) NOT NULL, start_city VARCHAR(20), ride_cost SMALLINT NOT NULL, open_seats SMALLINT NOT NULL, optional_notes TEXT);";
     db.task( 'insert data', task => {
       return task.batch([
@@ -179,12 +179,52 @@ app.post('/setting', (req, res) => {
   .catch( err => {
     console.log(err);
   })
+  res.sendFile(path.join(__dirname, './views', 'Settings.html'))
 });
 
-app.post('/signup', (req,res) => {
-  console.log(req.body);
+app.get('/Login.html', (req, res) => {
+  res.sendFile(path.join(__dirname, './views', 'Login.html'))
+})
+
+app.get('/login', (req, res) => {
+  console.log(req.query);
+  let email = req.query.email;
+  let password = req.query.password;
+  let query = `SELECT user_id FROM users WHERE email = '${email}' AND password = '${password}';`
+  db.any(query)
+    .then( data => {
+      res.send(data);
+    })
+    .catch( () => {
+        res.send("ERROR");
+    })
+})
+
+app.get('/Signup.html', (req,res) => {
+  res.sendFile(path.join(__dirname, './views', 'Signup.html'))
   //db.any('')
 });
+
+app.get('/Settings.html', (req,res) => {
+  res.sendFile(path.join(__dirname, './views', 'Settings.html'))
+  //db.any('')
+});
+
+app.get('/signup', (req, res) => {
+  console.log(req.query);
+  let query = `INSERT INTO users (name, email, password, is18, isDriver) VALUES ('${req.query.first}` + ' ' + `${req.query.last}', '${req.query.email}', '${req.query.password}', ${req.query.is18}, ${req.query.isDriver})`
+  console.log(query);
+  db.any(query)
+    .then( data => {
+      db.any(`SELECT user_id FROM users WHERE email = '${req.query.email}'`)
+      .then( data => {
+        res.send(data);
+      })
+    })
+    .catch( err => {
+      console.log(err);
+    })
+})
 
 app.listen(3000);
 console.log('3000 is the magic port');

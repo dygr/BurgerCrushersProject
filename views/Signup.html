@@ -6,26 +6,26 @@
         <meta name="description" content="">
         <title> Signup Page </title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-        <link href="./resources/css/signup.css" rel="stylesheet">
-        <script src="./resources/js/signup.js"></script>
+        <link href="./views/resources/css/signup.css" rel="stylesheet">
+        <script src="./views/resources/js/signup.js"></script>
     </head>
     <body class="center text-center">
         <form class="form-signup">
             <div class="form-group">
                 <label for="name" class="col-2" id="input_id">First Name: </label>
-                <input type="text" id="input_id" name="field_first_name" class="col-5">
+                <input type="text" id="first_name" name="first_name" class=" col-5">
             </div>
             <div class="form-group">
                 <label for="name" class="col-2">Last Name:</label>
-                <input type="text" id="input_id" name="field_last_name" class="col-5">
+                <input type="text" id="last_name" name="last_name" class="col-5">
             </div>
             <div class="form-group">
                 <label for="email" class="col-2">Email:</label>
-                <input type="text" id="input_id" name="field_email" class="col-5">
+                <input type="text" id="email" name="email" class="col-5">
             </div>
             <div class="form-group">
                 <label for="password" class="col-2">Password:</label>
-                <input type="password" id="input_id" name="field_" class="col-5">
+                <input type="password" id="password" name="password" class="col-5">
             </div>
             <div class="form-group">
                 <label for="isDriver" class="col-1"> Driver: </label>
@@ -38,11 +38,6 @@
                     <input type="radio" name="is18" value="true"> Yes </input>
                     <input type="radio" name="is18" value="false"> No </input>
                 </div>
-                <div class="form-group">
-                    <label for="hasCar" class="col-2"> Do you have access to a vehicle? </label>
-                    <input type="radio" name="hasCar" value="true"> Yes </input>
-                    <input type="radio" name="hasCar" value="false"> No </input>
-                </div>
             </div>    
             <input type="submit" value="Submit" class="btn btn-primary btn-block">
             <br/>
@@ -53,16 +48,33 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script>
-  $(document).ready(function() {
-    $.ajax({
-        url: "http://localhost:3000/signup",  // the local Node server
-        method: 'POST',
-        success: function(data){
-            
-            console.log("signed up");
-          }
-    })
+  $("form").submit(function() {
+    let d = document.querySelector('input[name="isDriver"]:checked').value;
+    let i = document.querySelector('input[name="is18"]:checked').value;
+    event.preventDefault();
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(re.test(String(email.value).toLowerCase())){
+        $.ajax({
+            url: `http://localhost:3000/signup`,  // the local Node server
+            method: 'GET',
+            data: {
+                email: email.value,
+                password: password.value,
+                first: first_name.value,
+                last: last_name.value,
+                isDriver: d,
+                is18: i,
+            },
+            success: (data)=>{
+                sessionStorage.setItem('user_id', data[0].user_id)
+                $.ajax({
+                    url: `http://localhost:3000/Home.html`,  // the local Node server
+                    method: 'GET',
+                })
+            }
+        })
+    }
 
-});
+  });
 </script>
 </html>

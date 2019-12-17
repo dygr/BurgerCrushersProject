@@ -51,6 +51,7 @@
               method: 'POST',
               url: "http://localhost:3000/setting",  // the local Node server, change later?
               data: {
+                "user_id": sessionStorage.getItem('user_id'),
                 "date": date,
                 "pay": pay,
                 "slots": slots,
@@ -75,6 +76,7 @@
             method: 'POST',
             url: "http://localhost:3000/setting",  // the local Node server, change later?
             data: {
+              "user_id": sessionStorage.getItem('user_id'),
               "name": name,
               "age": age,
               "car": car,

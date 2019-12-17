@@ -6,23 +6,52 @@
         <meta name="description" content="">
         <title> Login Page </title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-        <link href="./resources/css/signin.css" rel="stylesheet">
+        <link href="./views/resources/css/signin.css" rel="stylesheet">
     </head>
     <body class="center text-center">
-        <form class="form-signin">
+        <form class="form-signin" action="/login" method="GET">
             <h1> Sign In </h1>
             <label> Email Address </label>
-            <input class="form-control" id="inputEmail"/>
+            <input name="email" class="form-control" id="inputEmail"/>
             <label> Password </label>
-            <input class="form-control" id="inputPassword" type="password"/>
-            <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me | 
-            </label>
-                <a href="">Forgot Password?</a>
-            </div>
+            <input name="password" class="form-control" id="inputPassword" type="password"/>
+            <p id="error"> </p>
             <button class="btn btn-lg btn-primary" type="submit"> Sign in </button>
-            <a class="btn btn-lg btn-primary" href="signup.html"> Sign Up </a>
+            <a class="btn btn-lg btn-primary" href="Signup.html"> Sign Up </a>
         </form>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script>
+            $("form").submit( ()=> {
+                event.preventDefault();
+                let email = document.getElementById("inputEmail").value;
+                let password = document.getElementById("inputPassword").value
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if(re.test(String(email).toLowerCase())){
+                    $.ajax({
+                        url: `http://localhost:3000/login`,  // the local Node server
+                        method: 'GET',
+                        data: {
+                            email: email,
+                            password: password 
+                        },
+                        success: (data)=>{
+                            if(data=="ERROR"){
+                                document.getElementById("error").innerHTML = 'Invalid login credentials';
+                            }
+                            else{
+                                console.log(data)
+                                sessionStorage.setItem('user_id', data[0].user_id)
+                                window.location.href="Home.html";
+                            }
+                        }
+                    })
+                }
+                else {
+                    alert("Please insert a valid email");
+                }
+            });   
+        </script>
     </body>
 </html>
