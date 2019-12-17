@@ -96,7 +96,7 @@ app.get('/', (req, res) => {
       var url = "http://api.powderlin.es/closest_stations?lat=" + resorts[resort].lat + "&lng=" + resorts[resort].lng + "&data=true&days=1&count=1";
       retrieveNpost(url, "'"+resorts[resort].name+"'", resort) //single quotes added to string
     }
-    let query1 = "CREATE TABLE IF NOT EXISTS users( user_id SERIAL PRIMARY KEY, name VARCHAR(20), email VARCHAR(20), password VARCHAR(20), age INT, car VARCHAR(50), car_color VARCHAR(20), license VARCHAR(10));";
+    let query1 = "CREATE TABLE IF NOT EXISTS users( user_id SERIAL PRIMARY KEY, name VARCHAR(30), email VARCHAR(30), password VARCHAR(20), age INT, car VARCHAR(50), car_color VARCHAR(20), license VARCHAR(15));";
     let query2 = "CREATE TABLE IF NOT EXISTS available_rides(ride_id SERIAL PRIMARY KEY,	user_id SERIAL NOT NULL,	ride_date VARCHAR(30) NOT NULL, ride_time TIME NOT NULL,	dest_mountain VARCHAR(30) NOT NULL, start_city VARCHAR(20), ride_cost SMALLINT NOT NULL, open_seats SMALLINT NOT NULL, optional_notes TEXT);";
     db.task( 'insert data', task => {
       return task.batch([

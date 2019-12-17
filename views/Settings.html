@@ -49,7 +49,7 @@
           var start = $("#start1").val();
           $.ajax({
               method: 'POST',
-              url: "http://localhost:3000/setting",  // the local Node server
+              url: "http://localhost:3000/setting",  // the local Node server, change later?
               data: {
                 "date": date,
                 "pay": pay,
@@ -64,13 +64,27 @@
 
           })
         }
+        //name , email, password, age INT, car, car_color, license;";
         function submitInfo(){
+          var name = $("#fullName").val();
+          var age = $("#ageInput").val();
+          var car = $("#carInput").val();
+          var carColor = $("#carColorInput").val();
+          var license = $("#licenseInput").val();
           $.ajax({
-              url: "http://localhost:3000/setting",  // the local Node server
-              method: 'POST',
-              success: function(data){
-                  console.log("test2"); //display data in cosole to see if I receive it
-              }
+            method: 'POST',
+            url: "http://localhost:3000/setting",  // the local Node server, change later?
+            data: {
+              "name": name,
+              "age": age,
+              "car": car,
+              "carColor": carColor,
+              "license": license
+            },
+            dataType: "text"
+          })
+          .then(data => {
+
           })
         }
         </script>
@@ -106,15 +120,16 @@
                         <input type="number" class="form-control" id="ageInput" aria-describedby="ageHelp" placeholder="Age">
                       </div>
                       <div class="form-group">
-                        <label for="cityInput" style="color:#002266;"><h5>City of Residence:</h5></label>
-                        <input type="text" class="form-control" id="cityInput" aria-describedby="cityHelp" placeholder="City Name">
+                        <label for="carInput" style="color:#002266;"><h5>Car Type:</h5></label>
+                        <input type="text" class="form-control" id="carInput" aria-describedby="carHelp" placeholder="Type">
                       </div>
                       <div class="form-group"> <!--Remove Later if GPS unecessary, match by city instead-->
-                        <label for="addressInput" style="color:#002266;"><h5>First Line of Address:</h5></label>
-                        <input type="text" class="form-control" id="addressInput" aria-describedby="addressHelp" placeholder="Address">
-                        <p>
-                          (No apartment # needed) <br/>
-                        </p>
+                        <label for="carColorInput" style="color:#002266;"><h5>Car Color:</h5></label>
+                        <input type="text" class="form-control" id="carColorInput" aria-describedby="colorHelp" placeholder="Color">
+                      </div>
+                      <div class="form-group"> <!--Remove Later if GPS unecessary, match by city instead-->
+                        <label for="licenseInput" style="color:#002266;"><h5>License:</h5></label>
+                        <input type="text" class="form-control" id="licenseInput" aria-describedby="licenseHelp" placeholder="License">
                       </div>
                       <button type="button" class="btn btn-info" onclick="submitInfo();">Save Changes</button>
                       <br/>
