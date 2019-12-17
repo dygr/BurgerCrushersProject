@@ -121,28 +121,20 @@ app.get('/Home.html', (req, res) => {
     res.sendFile(path.join(__dirname, './views', 'Home.html'));
 });
 
-app.get('/data', (req, res) => {
-    db.any('SELECT * FROM weather LIMIT 1;')
-    .then( data => {
-      res.send(data);
-    })
-    .catch( err => {
-      console.log(err);
-    })
-});
-
-app.get('/home/search_rides', function(req, res) {
-	var destMountain = req.body.inputResortDest.value;
-	var startCity = req.body.inputStartCity.value;
-	var departDate = req.body.departDate.value;
-  var searchReq = "select * from available_rides where dest_mountain = '" + destMountain + "' and  start_city = '" + startCity + "' and ride_date = '" + departDate + "';"; //Need to fill in names of tables and columns
-	db.task('get-everything', task => {
+app.get('/search_rides', function(req, res) {
+  console.log(req.query)
+	var destMountain = req.query.inputResortDest;
+	var startCity = req.query.inputStartCity;
+	var departDate = req.query.departDate;
+  var searchReq = "select * from available_rides where dest_mountain = '" + destMountain + "' and start_city = '" + startCity + "' and ride_date = '" + departDate + "';"; //Need to fill in names of tables and columns
+  console.log(searchReq)
+  db.task('get-everything', task => {
         return task.batch([
             task.any(searchReq)
         ]);
     })
     .then(info => {
-    	res.send(info)
+    	res.send(info[0])
     })
     .catch(error => {
         // display error message in case an error
@@ -171,10 +163,10 @@ app.get('/search_weather', function(req, res) {
 
 app.post('/setting', (req, res) => {
   console.log(req.body);
-  var query = `INSERT INTO available_rides (ride_date, ride_time, dest_mountain, start_city, ride_cost, open_seats, optional_notes) VALUES ('${req.body.date}', '${req.body.date}', '${req.body.resort}', '${req.body.start}', ${req.body.pay}, ${req.body.slots}, '${req.body.description}');`
+  var query = `INSERT INTO available_rides (user_id, ride_date, ride_time, dest_mountain, start_city, ride_cost, open_seats, optional_notes) VALUES (${req.body.user_id}, '${req.body.date}', '${req.body.date}', '${req.body.resort}', '${req.body.start}', ${req.body.pay}, ${req.body.slots}, '${req.body.description}');`
   db.any(query)
   .then( data => {
-    res.send(data);
+    console.log("inserted")
   })
   .catch( err => {
     console.log(err);
@@ -225,6 +217,23 @@ app.get('/signup', (req, res) => {
       console.log(err);
     })
 })
+
+app.get('/Profile.html', (req,res) => {
+  res.sendFile(path.join(__dirname, './views', 'Profile.html'))
+  //db.any('')
+});
+
+app.get('/Settings.html', (req,res) => {
+  res.sendFile(path.join(__dirname, './views', 'Settings.html'))
+  //db.any('')
+});
+
+app.get('/Faq.html', (req,res) => {
+  res.sendFile(path.join(__dirname, './views', 'Faq.html'))
+  //db.any('')
+});
+
+
 
 app.listen(3000);
 console.log('3000 is the magic port');

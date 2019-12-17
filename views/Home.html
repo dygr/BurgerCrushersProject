@@ -124,10 +124,10 @@ th, td {
 <br>
 <div class="heading">Search For Rides</div>
 <br>
-<form action="/Home/search_rides" method="get">
+<form action="/search_rides" method="get">
 
 <div class="input-group mb-3">
-  <select class="custom-select" id="inputResortDest">
+  <select class="custom-select" id="inputResortDest" name="inputResortDest">
     <option selected>Select a Ski Resort Destination</option>
     <option value="Winter Park">Winter Park</option>
     <option value="Breckenridge">Breckenridge</option>
@@ -142,7 +142,7 @@ th, td {
 </div>
 
 <div class="input-group mb-3">
-  <select class="custom-select" id="inputStartCity">
+  <select class="custom-select" id="inputStartCity" name="inputStartCity">
     <option selected>Select Starting City</option>
     <option value="Colorado Springs">Colorado Springs</option>
     <option value="Denver">Denver</option>
@@ -155,7 +155,7 @@ th, td {
   <div class="input-group-prepend">
     <span class="input-group-text" id="basic-addon1">Ride Date</span>
   </div>
-  <input type="text" class="form-control" placeholder="MM/DD" aria-label="Username" aria-describedby="basic-addon1" id="dateInput">
+  <input name="dateInput" type="text" class="form-control" placeholder="MM/DD/YYYY" aria-label="Username" aria-describedby="basic-addon1" id="dateInput">
 </div>
 
 
@@ -235,17 +235,22 @@ th, td {
     })
 
 }
-
-function get_rides() {
-  $.ajax({
-      url: "http://localhost:3000/data",  // the local Node server
+  $("form").submit( ()=> {
+    event.preventDefault();
+    $.ajax({
+      url: "http://localhost:3000/search_rides",  // the local Node server
       method: 'GET',
+      data: {
+        inputResortDest: inputResortDest.value,
+        inputStartCity: inputStartCity.value,
+        departDate: dateInput.value + " 8:00-5:00"
+      },
       success: function(info){
           console.log(info[0])
           document.getElementById("rideTable").innerHTML = "<tr><th>Ride Date</th><th>Departure Time</th><th>Starting Location</th><th>Destination Mountain</th><th>Available Seats</th><th>Additional Info</th></tr><tr><td>" + info[0].ride_date + "</td><td>" + info[0].ride_time + "</td><td>" + info[0].start_city + "</td><td>" + info[0].dest_mountain + "</td><td>" + info[0].open_seats + "</td><td>" + info[0].optional_notes + "</td></tr><tr><td>" + info[1].ride_date + "</td><td>" + info[1].ride_time + "</td><td>" + info[1].start_city + "</td><td>" + info[1].dest_mountain + "</td><td>" + info[1].open_seats + "</td><td>" + info[1].optional_notes + "</td></tr>"
-        }
+      }
   })
-}
+            });   
 </script>
 </body>
 </html>
