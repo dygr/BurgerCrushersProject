@@ -14,3 +14,12 @@ The website will be marketed towards college students, who are likely to share r
 their peers and also more likely to need or want cheap transportation to their favorite skiing
 destinations. The app will focus on simplicity and useability, with just a few easy to use and
 highly useful features.
+
+The following includes the structure for our repo:
+  1. node_modules- folder with files to start our server
+  2. resources - folder for images used
+  3. views - folder of html code
+  4. server.js - code for backend
+  5. package-lock.json - dependecies generated through the node package installation
+  6. test_cases - provided test plan and cases performed to achieve efficiency throughout the site
+  7. README - site decription and repo navigation
