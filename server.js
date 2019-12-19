@@ -16,8 +16,6 @@ const bodyParser = require('body-parser'); // Add the body-parser tool has been 
 app.use(bodyParser.json());              // Add support for JSON encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Add support for URL encoded bodies
 
-const html = require('html'); // Add the 'pug' view engine
-
 //Create Database Connection
 const pgp = require('pg-promise')();
 
@@ -45,7 +43,6 @@ const dbConfig = {
 
 let db = pgp(dbConfig);
 
-app.set('view engine', html);
 app.use(express.static(__dirname + '/')); // This line is necessary for us to use relative paths and access our resources directory
 
 app.use((req, res, next) => {
@@ -119,6 +116,28 @@ app.get('/Home.html', (req, res) => {
         //console.log(error);
       })
     res.sendFile(path.join(__dirname, './views', 'Home.html'));
+});
+
+app.get('/', (req, res) => {
+  for (resort in resorts){
+    var url = "http://api.powderlin.es/closest_stations?lat=" + resorts[resort].lat + "&lng=" + resorts[resort].lng + "&data=true&days=1&count=1";
+    var url2 = `https://api.darksky.net/forecast/0bb64cbe7d94b50e33c824e088f2c9f7/${resorts[resort].lat},${resorts[resort].lng}`;
+    retrieveNpost(url, "'"+resorts[resort].name+"'", resort, url2) //single quotes added to string
+  }
+  let query1 = "CREATE TABLE IF NOT EXISTS users( user_id SERIAL PRIMARY KEY, name VARCHAR(30), email VARCHAR(30) UNIQUE, password VARCHAR(20), is18 BOOL, isDriver BOOL, car VARCHAR(50), car_color VARCHAR(20), license VARCHAR(15));";
+  let query2 = "CREATE TABLE IF NOT EXISTS available_rides(ride_id SERIAL PRIMARY KEY,	user_id SERIAL NOT NULL,	ride_date VARCHAR(30) NOT NULL, ride_time TIME NOT NULL,	dest_mountain VARCHAR(30) NOT NULL, start_city VARCHAR(20), ride_cost SMALLINT NOT NULL, open_seats SMALLINT NOT NULL, optional_notes TEXT);";
+  db.task( 'insert data', task => {
+    return task.batch([
+        task.any(query1),
+        task.any(query2),
+    ]);
+  }).then( data => {
+    //do nothing
+  })
+    .catch( error => {
+      //console.log(error);
+    })
+  res.sendFile(path.join(__dirname, './views', 'Home.html'));
 });
 
 app.get('/search_rides', function(req, res) {
