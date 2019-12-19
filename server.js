@@ -9,8 +9,6 @@
 
 const express = require('express'); // Add the express framework has been added
 let app = express();
-const favicon = require('express-favicon');
-app.use(favicon(__dirname + '/views/favicon.ico'));
 
 const rp = require('request-promise');
 
@@ -119,6 +117,8 @@ app.get('/Home.html', (req, res) => {
       })
     res.sendFile(path.join(__dirname, './views', 'Home.html'));
 });
+
+app.get('/favicon.ico', (req, res) => res.status(204));
 
 app.get('/', (req, res) => {
   for (resort in resorts){
