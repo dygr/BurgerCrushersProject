@@ -1,0 +1,13 @@
+{
+    "name": "nodejs",
+    "main": "server.js",
+    "engines": {
+        "node": "11.15.0",
+        "npm": "6.7.0"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "request": "^2.88.0",
+        "request-promise": "^4.2.5"
+    }
+}
