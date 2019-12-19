@@ -9,6 +9,8 @@
 
 const express = require('express'); // Add the express framework has been added
 let app = express();
+const favicon = require('express-favicon');
+app.use(favicon(__dirname + '/views/favicon.ico'));
 
 const rp = require('request-promise');
 
