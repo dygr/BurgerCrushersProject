@@ -257,4 +257,4 @@ app.get('/Faq.html', (req,res) => {
 
 
 app.listen(process.env.PORT || 3000);
-console.log(`${proccess.env.PORT} is the magic port`);
+console.log(`${process.env.PORT} is the magic port`);
